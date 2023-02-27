@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:51:40 by jdoh              #+#    #+#             */
-/*   Updated: 2023/02/27 03:51:42 by jdoh             ###   ########.fr       */
+/*   Updated: 2023/02/27 04:00:17 by jdoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_milisec	starve_time(struct timeval *start_time, struct timeval *cur_time);
 
 /* ------------------------ destroy ------------------------ */
 int			free_and_ret(void *freed1, void *freed2, void *freed3, int ret);
-void		mutex_destroy_until(pthread_mutex_t *forks, int cnt);
+void		destroy_mutex_until(pthread_mutex_t *forks, int cnt);
 
 /* ----------------------- error_msg ----------------------- */
 int			error_argc(void);

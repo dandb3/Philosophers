@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:51:06 by jdoh              #+#    #+#             */
-/*   Updated: 2023/02/27 03:51:06 by jdoh             ###   ########.fr       */
+/*   Updated: 2023/02/27 04:04:48 by jdoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	free_and_ret(void *freed1, void *freed2, void *freed3, int ret)
 	return (ret);
 }
 
-void	mutex_destroy_until(pthread_mutex_t *forks, int cnt)
+void	destroy_mutex_until(pthread_mutex_t *forks, int cnt)
 {
 	int	idx;
 
@@ -30,4 +30,7 @@ void	mutex_destroy_until(pthread_mutex_t *forks, int cnt)
 	free(forks);
 }
 
-int	destroy_all(t_resource *resource, t_philo *philosophers)
+void	destroy_all(t_resource *resource, t_philo *philosophers, int ret)
+{
+	
+}

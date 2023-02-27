@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:51:21 by jdoh              #+#    #+#             */
-/*   Updated: 2023/02/27 03:51:22 by jdoh             ###   ########.fr       */
+/*   Updated: 2023/02/27 04:00:15 by jdoh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	set_tables(t_info *info, t_resource *resource)
 	{
 		if (pthread_mutex_init(&resource->forks[idx], NULL) == RET_FAILURE)
 		{
-			mutex_destroy_until(resource->forks, idx);
+			destroy_mutex_until(resource->forks, idx);
 			return (free_and_ret(resource->philosophers, NULL, NULL, error_mutex_init()));
 		}
 	}
@@ -76,7 +76,7 @@ int	philo_init(t_info *info, t_resource *resource, t_philo *philosophers)
 	}
 	if (set_philosophers(info, resource, philosophers) == RET_FAILURE)
 	{
-		mutex_destroy_until(resource->forks, info->number_of_philosophers);
+		destroy_mutex_until(resource->forks, info->number_of_philosophers);
 		pthread_mutex_destroy(&resource->print_mutex);
 		return (free_and_ret(resource->philosophers, NULL, NULL, RET_FAILURE));
 	}

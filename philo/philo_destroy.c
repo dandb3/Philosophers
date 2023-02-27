@@ -20,6 +20,7 @@ int	free_and_ret(void *freed1, void *freed2, void *freed3, int ret)
 	return (ret);
 }
 
+/* destroy_ functions must be executed in main thread. */
 void	destroy_mutex_until(pthread_mutex_t *forks, int cnt)
 {
 	int	idx;

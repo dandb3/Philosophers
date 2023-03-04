@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:51:29 by jdoh              #+#    #+#             */
-/*   Updated: 2023/02/27 03:51:30 by jdoh             ###   ########.fr       */
+/*   Updated: 2023/02/28 17:03:22 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 						number_of_philosophers time_to_die \
 						time_to_eat time_to_sleep \
 						[number_of_times_each_philosopher_must_eat]\n"
-# define ERR_NUM "Please put positive integer value smaller than 1000000.\n"
+# define ERR_NUM "Please put positive integer value smaller than 1000.\n"
 # define ERR_MUTEX "Mutex initialization error\n"
 # define ERR_MALLOC "Malloc error\n"
 # define ERR_GETTIME "Gettimeofday error\n"

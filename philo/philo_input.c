@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:51:24 by jdoh              #+#    #+#             */
-/*   Updated: 2023/02/27 03:51:25 by jdoh             ###   ########.fr       */
+/*   Updated: 2023/02/28 17:03:03 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	atoi_range_check(char const *str)
 	{
 		result = 10 * result + *str - '0';
 		++str;
-		if (result >= 1000000)
+		if (result >= 1000)
 			return (RET_FAILURE);
 	}
 	if (*str < '0' || *str > '9')
@@ -43,7 +43,7 @@ int	input_info(t_info *info, int argc, char *argv[])
 	info->time_to_sleep = atoi_range_check(argv[4]);
 	if (argc == 6)
 		info->number_of_times_each_philosopher_must_eat
-				= atoi_range_check(argv[5]);
+			= atoi_range_check(argv[5]);
 	else
 		info->number_of_times_each_philosopher_must_eat = 0;
 	if ((info->number_of_philosophers | info->time_to_die \

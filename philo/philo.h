@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:51:40 by jdoh              #+#    #+#             */
-/*   Updated: 2023/02/27 04:00:17 by jdoh             ###   ########.fr       */
+/*   Updated: 2023/02/28 16:55:50 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef int t_milisec;
+typedef int	t_milisec;
 
 typedef struct s_info
 {
@@ -34,14 +34,19 @@ typedef struct s_resource
 	pthread_t		*philosophers;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	monitor_mutex;
+	int				monitor;
 }	t_resource;
 
 typedef struct s_philo
 {
 	struct timeval	last_time_eat;
 	pthread_mutex_t	*print_mutex;
+	pthread_mutex_t	*monitor_mutex;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	t_info			*info;
+	int				*monitor;
 	int				idx;
 }	t_philo;
 
@@ -56,7 +61,8 @@ int			philo_died(t_philo *philosophers, t_info *philo_info);
 
 /* ---------------------- initialize ----------------------- */
 int			input_info(t_info *info, int argc, char *argv[]);
-int			philo_init(t_info *info, t_resource *resource, t_philo *philosophers);
+int			philo_init(t_info *info, t_resource *resource,
+				t_philo *philosophers);
 
 /* ------------------------- utils ------------------------- */
 size_t		ft_strlen(const char *str);

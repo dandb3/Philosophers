@@ -20,6 +20,7 @@ static int	take_forks(t_philo *philo_data)
 
 static int	philo_eat(t_philo *philo_data)
 {
+	usleep(DELAY);
 	if (take_forks(philo_data) == RET_FAILURE)
 		return (RET_FAILURE);
 	if (print_msg(philo_data, MSG_EAT, MODE_EAT) == RET_FAILURE)

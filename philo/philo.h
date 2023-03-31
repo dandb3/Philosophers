@@ -11,7 +11,7 @@
 
 # define RET_SUCCESS 0
 # define RET_FAILURE -1
-# define DELAY 50
+# define DELAY 100
 # define DEAD -1
 
 typedef int t_milisec;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_init.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/01 14:02:28 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/01 14:03:14 by jdoh             ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static int	input_init(t_input *input, char *argv[])
@@ -10,7 +22,8 @@ static int	input_init(t_input *input, char *argv[])
 	if (argv[5] != NULL)
 		input->number_of_times = philo_atoi(argv[5]);
 	if (input->philo_num == RET_FAILURE || input->time_to_die == RET_FAILURE
-		|| input->time_to_eat == RET_FAILURE || input->time_to_sleep == RET_FAILURE
+		|| input->time_to_eat == RET_FAILURE
+		|| input->time_to_sleep == RET_FAILURE
 		|| (argv[5] != NULL && input->number_of_times == RET_FAILURE))
 		return (RET_FAILURE);
 	return (RET_SUCCESS);
@@ -20,7 +33,8 @@ static int	resource_init(t_input *input, t_resource *resource)
 {
 	int	idx;
 
-	resource->forks = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * input->philo_num);
+	resource->forks = (pthread_mutex_t *)
+		malloc(sizeof(pthread_mutex_t) * input->philo_num);
 	if (resource->forks == NULL)
 		return (RET_FAILURE);
 	idx = -1;
@@ -31,7 +45,8 @@ static int	resource_init(t_input *input, t_resource *resource)
 	return (RET_SUCCESS);
 }
 
-static int	philo_data_init(t_input *input, t_resource *resource, t_philo **philo_data)
+static int	philo_data_init(t_input *input,
+	t_resource *resource, t_philo **philo_data)
 {
 	int	idx;
 
@@ -42,10 +57,12 @@ static int	philo_data_init(t_input *input, t_resource *resource, t_philo **philo
 	while (++idx < input->philo_num)
 	{
 		(*philo_data)[idx].first_fork = &resource->forks[idx];
-		(*philo_data)[idx].second_fork = &resource->forks[(idx + 1) % input->philo_num];
+		(*philo_data)[idx].second_fork
+			= &resource->forks[(idx + 1) % input->philo_num];
 		if ((idx + 1) % 2 == 0)
 		{
-			(*philo_data)[idx].first_fork = &resource->forks[(idx + 1) % input->philo_num];
+			(*philo_data)[idx].first_fork
+				= &resource->forks[(idx + 1) % input->philo_num];
 			(*philo_data)[idx].second_fork = &resource->forks[idx];
 		}
 		(*philo_data)[idx].mutex_die_checker = &resource->mutex_die_checker;
@@ -58,7 +75,8 @@ static int	philo_data_init(t_input *input, t_resource *resource, t_philo **philo
 	return (RET_SUCCESS);
 }
 
-int	philo_init(t_input *input, t_resource *resource, t_philo **philo_data, char *argv[])
+int	philo_init(t_input *input, t_resource *resource,
+	t_philo **philo_data, char *argv[])
 {
 	if (input_init(input, argv) == RET_FAILURE)
 	{

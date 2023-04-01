@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_msg.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/01 14:03:27 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/01 14:03:27 by jdoh             ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	print_msg(t_philo *philo_data, const char *msg, t_mode mode)
@@ -11,7 +23,8 @@ int	print_msg(t_philo *philo_data, const char *msg, t_mode mode)
 		return (RET_FAILURE);
 	}
 	gettimeofday(&cur_time, NULL);
-	printf("%d %d%s", time_interval(philo_data->survive_start, &cur_time), philo_data->pos, msg);
+	printf("%d %d%s", time_interval(philo_data->survive_start, &cur_time),
+		philo_data->pos, msg);
 	if (mode == MODE_EAT)
 	{
 		philo_data->starve_start = cur_time;

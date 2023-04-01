@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_begin.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/01 13:59:40 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/01 14:19:08 by jdoh             ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	*survive(void *philo)
@@ -12,11 +24,12 @@ static void	*survive(void *philo)
 		return ((void *)RET_SUCCESS);
 	}
 	if (philo_data->pos % 2 == 0)
-		usleep(DELAY);
+		usleep(philo_data->input->time_to_eat * 500);
 	return (routine(philo_data));
 }
 
-static void	death_monitor(t_input *input, t_resource *resource, t_philo *philo_data)
+static void	death_monitor(t_input *input,
+	t_resource *resource, t_philo *philo_data)
 {
 	struct timeval	cur_time;
 	t_milisec		timestamp;
@@ -29,7 +42,8 @@ static void	death_monitor(t_input *input, t_resource *resource, t_philo *philo_d
 		timestamp = time_interval(&resource->start_time, &cur_time);
 		while (++idx < input->philo_num)
 		{
-			if (time_interval(&philo_data[idx].starve_start, &cur_time) >= input->time_to_die)
+			if (time_interval(&philo_data[idx].starve_start, &cur_time)
+				>= input->time_to_die)
 			{
 				pthread_mutex_lock(&resource->mutex_die_checker);
 				resource->die_cnt = DEAD;
@@ -40,7 +54,7 @@ static void	death_monitor(t_input *input, t_resource *resource, t_philo *philo_d
 		}
 		if (resource->die_cnt == DEAD)
 			break ;
-		usleep(5000);
+		usleep(500);
 	}
 }
 

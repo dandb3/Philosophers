@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:59:40 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 14:19:08 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/01 16:07:40 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static void	*survive(void *philo)
 	t_philo	*philo_data;
 
 	philo_data = (t_philo *) philo;
-	print_msg(philo_data, MSG_THINK, MODE_THINK);
+	print_msg(philo_data, MSG_THINK);
 	if (philo_data->input->philo_num == 1)
 	{
-		print_msg(philo_data, MSG_FORK, MODE_FORK);
+		print_msg(philo_data, MSG_FORK);
 		return ((void *)RET_SUCCESS);
 	}
 	if (philo_data->pos % 2 == 0)
@@ -46,15 +46,13 @@ static void	death_monitor(t_input *input,
 				>= input->time_to_die)
 			{
 				pthread_mutex_lock(&resource->mutex_die_checker);
-				resource->die_cnt = DEAD;
+				resource->die_cnt = DEAD_OR_FULL;
 				printf("%d %d%s", timestamp, philo_data[idx].pos, MSG_DIED);
 				pthread_mutex_unlock(&resource->mutex_die_checker);
-				break ;
+				return ;
 			}
 		}
-		if (resource->die_cnt == DEAD)
-			break ;
-		usleep(500);
+		usleep(1000);
 	}
 }
 

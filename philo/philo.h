@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 14:03:48 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 14:11:05 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/01 20:34:08 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 # include <stdio.h>
+# include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
@@ -23,18 +24,10 @@
 
 # define RET_SUCCESS 0
 # define RET_FAILURE -1
-# define DELAY 500
-# define DEAD -1
+# define DELAY 300
+# define DEAD_OR_FULL -1
 
 typedef int	t_milisec;
-typedef enum e_mode
-{
-	MODE_EAT,
-	MODE_SLEEP,
-	MODE_THINK,
-	MODE_FORK
-}	t_mode;
-
 typedef struct s_input
 {
 	t_milisec	time_to_die;
@@ -73,7 +66,8 @@ void		philo_begin(t_input *input, t_resource *resource,
 void		*routine(t_philo *philo_data);
 
 /* print */
-int			print_msg(t_philo *philo_data, const char *msg, t_mode mode);
+int			print_msg(t_philo *philo_data, const char *msg);
+int			print_msg_eat(t_philo *philo_data, const char *msg);
 
 /* initialize */
 int			philo_init(t_input *input, t_resource *resource,

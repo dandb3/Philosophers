@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:59:40 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 16:07:40 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/02 14:28:34 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ static void	*survive(void *philo)
 	return (routine(philo_data));
 }
 
+static int	full_check(t_resource *resource)
+{
+	if (resource->die_cnt == DEAD_OR_FULL)
+	{
+		pthread_mutex_unlock(&resource->mutex_die_checker);
+		return (RET_FAILURE);
+	}
+	return (RET_SUCCESS);
+}
+
 static void	death_monitor(t_input *input,
 	t_resource *resource, t_philo *philo_data)
 {
@@ -46,6 +56,8 @@ static void	death_monitor(t_input *input,
 				>= input->time_to_die)
 			{
 				pthread_mutex_lock(&resource->mutex_die_checker);
+				if (full_check(resource) == RET_FAILURE)
+					return ;
 				resource->die_cnt = DEAD_OR_FULL;
 				printf("%d %d%s", timestamp, philo_data[idx].pos, MSG_DIED);
 				pthread_mutex_unlock(&resource->mutex_die_checker);

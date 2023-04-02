@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 14:03:48 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 20:34:08 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/02 14:03:10 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 
 # define RET_SUCCESS 0
 # define RET_FAILURE -1
-# define DELAY 300
 # define DEAD_OR_FULL -1
 
 typedef int	t_milisec;
@@ -64,6 +63,7 @@ int			philo(char *argv[]);
 void		philo_begin(t_input *input, t_resource *resource,
 				t_philo *philo_data);
 void		*routine(t_philo *philo_data);
+void		pseudo_spinlock(struct timeval *after_wait, t_milisec duration);
 
 /* print */
 int			print_msg(t_philo *philo_data, const char *msg);

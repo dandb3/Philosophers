@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 14:03:35 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 20:29:53 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/02 14:08:39 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static int	take_forks(t_philo *philo_data)
 
 static int	philo_eat(t_philo *philo_data)
 {
-	usleep(DELAY);
+	struct timeval	before_wait;
+	struct timeval	after_wait;
+
+	usleep(100);
 	if (take_forks(philo_data) == RET_FAILURE)
 		return (RET_FAILURE);
 	if (print_msg_eat(philo_data, MSG_EAT) == RET_FAILURE)
@@ -41,7 +44,11 @@ static int	philo_eat(t_philo *philo_data)
 		pthread_mutex_unlock(philo_data->second_fork);
 		return (RET_FAILURE);
 	}
-	usleep(philo_data->input->time_to_eat * 1000);
+	gettimeofday(&before_wait, NULL);
+	usleep(philo_data->input->time_to_eat * 800);
+	gettimeofday(&after_wait, NULL);
+	pseudo_spinlock(&after_wait, philo_data->input->time_to_eat
+		- time_interval(&before_wait, &after_wait));
 	pthread_mutex_unlock(philo_data->first_fork);
 	pthread_mutex_unlock(philo_data->second_fork);
 	return (RET_SUCCESS);
@@ -49,9 +56,16 @@ static int	philo_eat(t_philo *philo_data)
 
 static int	philo_sleep(t_philo *philo_data)
 {
+	struct timeval	before_wait;
+	struct timeval	after_wait;
+
 	if (print_msg(philo_data, MSG_SLEEP) == RET_FAILURE)
 		return (RET_FAILURE);
-	usleep(philo_data->input->time_to_sleep * 1000);
+	gettimeofday(&before_wait, NULL);
+	usleep(philo_data->input->time_to_sleep * 800);
+	gettimeofday(&after_wait, NULL);
+	pseudo_spinlock(&after_wait, philo_data->input->time_to_sleep
+		- time_interval(&before_wait, &after_wait));
 	return (RET_SUCCESS);
 }
 

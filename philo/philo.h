@@ -27,6 +27,20 @@
 # define DEAD_OR_FULL -1
 
 typedef int	t_milisec;
+typedef enum e_status
+{
+	PUT_DOWN = 0,
+	PICK_UP
+}	t_status;
+typedef enum e_mode
+{
+	MODE_EAT,
+	MODE_THINK,
+	MODE_SLEEP,
+	MODE_FORK,
+	MODE_DIED
+}	t_mode;
+
 typedef struct s_input
 {
 	t_milisec	time_to_die;
@@ -36,38 +50,45 @@ typedef struct s_input
 	int			philo_num;
 }	t_input;
 
-typedef struct s_philo
+typedef struct s_forks
 {
-	struct timeval	starve_start;
-	pthread_t		self;
-	struct timeval	*survive_start;
-	pthread_mutex_t	*first_fork;
-	pthread_mutex_t	*second_fork;
-	pthread_mutex_t	*mutex_die_checker;
-	t_input			*input;
-	int				*die_cnt;
-	int				eat_cnt;
-	int				pos;
-}	t_philo;
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
+	t_status		*first_status;
+	t_status		*second_status;
+}	t_forks;
 
 typedef struct s_resource
 {
 	struct timeval	start_time;
-	pthread_mutex_t	mutex_die_checker;
-	pthread_mutex_t	*forks;
-	int				die_cnt;
+	pthread_mutex_t	mutex_simul;
+	pthread_mutex_t	*mutex_forks;
+	int				*forks_status;
+	int				simul_status;
 }	t_resource;
+
+typedef struct s_philo
+{
+	t_forks			forks;
+	struct timeval	last_eat;
+	struct timeval	wait_start;
+	pthread_t		self;
+	t_resource		*resource;
+	t_input			*input;
+	int				eat_cnt;
+	int				pos;
+}	t_philo;
 
 /* start */
 int			philo(char *argv[]);
 void		philo_begin(t_input *input, t_resource *resource,
 				t_philo *philo_data);
 void		*routine(t_philo *philo_data);
-void		pseudo_spinlock(struct timeval *after_wait, t_milisec duration);
+int			busy_wait(t_philo *philo_data, t_milisec duration);
+int			hold_forks(t_philo *philo_data);
 
 /* print */
-int			print_msg(t_philo *philo_data, const char *msg);
-int			print_msg_eat(t_philo *philo_data, const char *msg);
+int			print_msg(t_philo *philo_data, const char *msg, t_mode mode);
 
 /* initialize */
 int			philo_init(t_input *input, t_resource *resource,

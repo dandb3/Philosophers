@@ -33,16 +33,46 @@ static int	resource_init(t_input *input, t_resource *resource)
 {
 	int	idx;
 
-	resource->forks = (pthread_mutex_t *)
+	resource->mutex_forks = (pthread_mutex_t *)
 		malloc(sizeof(pthread_mutex_t) * input->philo_num);
-	if (resource->forks == NULL)
+	if (resource->mutex_forks == NULL)
 		return (RET_FAILURE);
+	resource->forks_status = (int *) malloc(sizeof(int) * input->philo_num);
+	if (resource->forks_status == NULL)
+	{
+		free(resource->mutex_forks);
+		return (RET_FAILURE);
+	}
+	memset(resource->forks_status, PUT_DOWN, sizeof(int) * input->philo_num);
 	idx = -1;
 	while (++idx < input->philo_num)
-		pthread_mutex_init(&resource->forks[idx], NULL);
-	pthread_mutex_init(&resource->mutex_die_checker, NULL);
-	resource->die_cnt = 0;
+		pthread_mutex_init(&resource->mutex_forks[idx], NULL);
+	pthread_mutex_init(&resource->mutex_simul, NULL);
+	resource->simul_status = 0;
 	return (RET_SUCCESS);
+}
+
+static void	philo_fork_init(t_input *input, t_resource *resource,
+	t_philo **philo_data, int idx)
+{
+	if ((idx + 1) % 2 == 1)
+	{
+		(*philo_data)[idx].forks.first = &resource->mutex_forks[idx];
+		(*philo_data)[idx].forks.second
+			= &resource->mutex_forks[(idx + 1) % input->philo_num];
+		(*philo_data)[idx].forks.first_status = &resource->forks_status[idx];
+		(*philo_data)[idx].forks.second_status
+			= &resource->forks_status[(idx + 1) % input->philo_num];
+	}
+	else
+	{
+		(*philo_data)[idx].forks.second = &resource->mutex_forks[idx];
+		(*philo_data)[idx].forks.first
+			= &resource->mutex_forks[(idx + 1) % input->philo_num];
+		(*philo_data)[idx].forks.second_status = &resource->forks_status[idx];
+		(*philo_data)[idx].forks.first_status
+			= &resource->forks_status[(idx + 1) % input->philo_num];
+	}
 }
 
 static int	philo_data_init(t_input *input,
@@ -56,20 +86,10 @@ static int	philo_data_init(t_input *input,
 	idx = -1;
 	while (++idx < input->philo_num)
 	{
-		(*philo_data)[idx].first_fork = &resource->forks[idx];
-		(*philo_data)[idx].second_fork
-			= &resource->forks[(idx + 1) % input->philo_num];
-		if ((idx + 1) % 2 == 0)
-		{
-			(*philo_data)[idx].first_fork
-				= &resource->forks[(idx + 1) % input->philo_num];
-			(*philo_data)[idx].second_fork = &resource->forks[idx];
-		}
-		(*philo_data)[idx].mutex_die_checker = &resource->mutex_die_checker;
-		(*philo_data)[idx].die_cnt = &resource->die_cnt;
+		philo_fork_init(input, resource, philo_data, idx);
+		(*philo_data)[idx].resource = resource;
 		(*philo_data)[idx].pos = idx + 1;
 		(*philo_data)[idx].input = input;
-		(*philo_data)[idx].survive_start = &resource->start_time;
 		(*philo_data)[idx].eat_cnt = 0;
 	}
 	return (RET_SUCCESS);

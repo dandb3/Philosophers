@@ -13,7 +13,7 @@
 NAME		=	philo
 SRCS		=	philo_begin.c philo_error.c philo_free.c philo_init.c \
 				philo_msg.c philo_routine.c philo_utils.c philo.c main.c \
-				philo_pseudo_spinlock.c
+				philo_busy_wait.c
 OBJS		=	$(SRCS:.c=.o)
 HEADERS		=	philo_error.h philo_msg.h philo.h
 PTHREAD		=	-pthread

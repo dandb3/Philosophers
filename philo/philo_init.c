@@ -37,13 +37,15 @@ static int	resource_init(t_input *input, t_resource *resource)
 		malloc(sizeof(pthread_mutex_t) * input->philo_num);
 	if (resource->mutex_forks == NULL)
 		return (RET_FAILURE);
-	resource->forks_status = (int *) malloc(sizeof(int) * input->philo_num);
+	resource->forks_status
+		= (t_status *) malloc(sizeof(t_status) * input->philo_num);
 	if (resource->forks_status == NULL)
 	{
 		free(resource->mutex_forks);
 		return (RET_FAILURE);
 	}
-	memset(resource->forks_status, PUT_DOWN, sizeof(int) * input->philo_num);
+	memset(resource->forks_status, PUT_DOWN,
+		sizeof(t_status) * input->philo_num);
 	idx = -1;
 	while (++idx < input->philo_num)
 		pthread_mutex_init(&resource->mutex_forks[idx], NULL);

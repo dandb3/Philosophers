@@ -63,7 +63,7 @@ typedef struct s_resource
 	struct timeval	start_time;
 	pthread_mutex_t	mutex_simul;
 	pthread_mutex_t	*mutex_forks;
-	int				*forks_status;
+	t_status		*forks_status;
 	int				simul_status;
 }	t_resource;
 

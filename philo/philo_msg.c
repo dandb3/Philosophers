@@ -19,7 +19,7 @@ static int	full_check(t_philo *philo_data)
 	full_flag = 0;
 	if (++(philo_data->eat_cnt) == philo_data->input->number_of_times)
 	{
-		pthrad_mutex_lock(&philo_data->resource->mutex_full);
+		pthread_mutex_lock(&philo_data->resource->mutex_full);
 		if (++(philo_data->resource->full_cnt) == philo_data->input->philo_num)
 			full_flag = 1;
 		pthread_mutex_unlock(&philo_data->resource->mutex_full);

@@ -15,10 +15,10 @@
 static void	drop_forks(t_philo *philo_data)
 {
 	pthread_mutex_lock(philo_data->forks.first);
-	philo_data->forks.first_status = PUT_DOWN;
+	*philo_data->forks.first_status = PUT_DOWN;
 	pthread_mutex_unlock(philo_data->forks.first);
 	pthread_mutex_lock(philo_data->forks.second);
-	philo_data->forks.second_status = PUT_DOWN;
+	*philo_data->forks.second_status = PUT_DOWN;
 	pthread_mutex_unlock(philo_data->forks.second);
 }
 

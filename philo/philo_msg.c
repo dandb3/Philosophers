@@ -47,6 +47,8 @@ int	print_msg(t_philo *philo_data, const char *msg, t_mode mode)
 		pthread_mutex_unlock(&philo_data->resource->mutex_simul);
 		return (RET_FAILURE);
 	}
+	if (mode == MODE_DIED)
+		philo_data->resource->simul_status = DEAD_OR_FULL;
 	printf("%d %d%s", timestamp, philo_data->pos, msg);
 	pthread_mutex_unlock(&philo_data->resource->mutex_simul);
 	if (mode == MODE_EAT)

@@ -38,7 +38,9 @@ typedef enum e_mode
 	MODE_THINK,
 	MODE_SLEEP,
 	MODE_FORK,
-	MODE_DIED
+	MODE_DIED,
+	MODE_STARVE,
+	MODE_FULL
 }	t_mode;
 
 typedef struct s_input
@@ -62,9 +64,11 @@ typedef struct s_resource
 {
 	struct timeval	start_time;
 	pthread_mutex_t	mutex_simul;
+	pthread_mutex_t mutex_full;
 	pthread_mutex_t	*mutex_forks;
 	t_status		*forks_status;
 	int				simul_status;
+	int				full_cnt;
 }	t_resource;
 
 typedef struct s_philo

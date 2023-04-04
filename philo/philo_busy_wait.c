@@ -34,6 +34,7 @@ int	busy_wait(t_philo *philo_data, t_milisec duration)
 {
 	struct timeval	cur_time;
 
+	gettimeofday(&philo_data->wait_start, NULL);
 	while (1)
 	{
 		usleep(300);

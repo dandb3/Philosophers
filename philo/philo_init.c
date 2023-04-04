@@ -24,7 +24,7 @@ static int	input_init(t_input *input, char *argv[])
 	if (input->philo_num == RET_FAILURE || input->time_to_die == RET_FAILURE
 		|| input->time_to_eat == RET_FAILURE
 		|| input->time_to_sleep == RET_FAILURE
-		|| (argv[5] != NULL && input->number_of_times == RET_FAILURE))
+		|| input->number_of_times == RET_FAILURE)
 		return (RET_FAILURE);
 	return (RET_SUCCESS);
 }
@@ -44,13 +44,14 @@ static int	resource_init(t_input *input, t_resource *resource)
 		free(resource->mutex_forks);
 		return (RET_FAILURE);
 	}
-	memset(resource->forks_status, PUT_DOWN,
-		sizeof(t_status) * input->philo_num);
+	memset(resource->forks_status, 0, sizeof(t_status) * input->philo_num);
 	idx = -1;
 	while (++idx < input->philo_num)
 		pthread_mutex_init(&resource->mutex_forks[idx], NULL);
 	pthread_mutex_init(&resource->mutex_simul, NULL);
+	pthread_mutex_init(&resource->mutex_full, NULL);
 	resource->simul_status = 0;
+	resource->full_cnt = 0;
 	return (RET_SUCCESS);
 }
 

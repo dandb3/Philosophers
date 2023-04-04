@@ -20,6 +20,7 @@ void	free_resource(t_resource *resource, t_input *input)
 	while (++idx < input->philo_num)
 		pthread_mutex_destroy(&resource->mutex_forks[idx]);
 	pthread_mutex_destroy(&resource->mutex_simul);
+	pthread_mutex_destroy(&resource->mutex_full);
 	free(resource->mutex_forks);
 	free(resource->forks_status);
 }

@@ -18,11 +18,6 @@ static void	*survive(void *philo)
 
 	philo_data = (t_philo *) philo;
 	print_msg(philo_data, MSG_THINK, MODE_THINK);
-	if (philo_data->input->philo_num == 1)
-	{
-		print_msg(philo_data, MSG_FORK, MODE_FORK);
-		return ((void *)RET_SUCCESS);
-	}
 	if (philo_data->pos % 2 == 0)
 		usleep(philo_data->input->time_to_eat * 500);
 	return (routine(philo_data));

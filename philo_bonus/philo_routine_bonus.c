@@ -4,8 +4,9 @@ static void	philo_eat(t_info *info)
 {
 	usleep(100);
 	hold_forks(info);
-	print_msg(info, MSG_EAT, MODE_EAT);
-
+	print_msg(info, MSG_EAT);
+	if (++(info->eat_cnt) == info->input->number_of_times)
+		sem_post(info->resource->full_counter);
 }
 
 static void	philo_sleep(t_info *info)

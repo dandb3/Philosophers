@@ -24,14 +24,6 @@
 # define ALIVE 0
 
 typedef int t_milisec;
-typedef enum e_mode
-{
-	MODE_EAT,
-	MODE_THINK,
-	MODE_SLEEP,
-	MODE_FORK,
-	MODE_DIED
-}	t_mode;
 
 typedef struct s_input
 {
@@ -64,7 +56,7 @@ typedef struct s_info
 	int				pos;
 }	t_info;
 
-void	print_msg(t_info *info, const char *msg, t_mode mode);
+void	print_msg(t_info *info, const char *msg);
 void	hold_forks(t_info *info);
 void	busy_wait(t_info *info, t_milisec duration);
 

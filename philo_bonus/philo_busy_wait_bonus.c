@@ -17,7 +17,7 @@ void	busy_wait(t_info *info, t_milisec duration)
 		usleep(300);
 		gettimeofday(&cur_time, NULL);
 		if (die_check(info, &cur_time) == DEAD)
-			print_msg(info, MSG_DIED, MODE_DIED);
+			print_msg(info, MSG_DIED);
 		if (time_interval(&info->wait_start, &cur_time) >= duration)
 			return ;
 	}

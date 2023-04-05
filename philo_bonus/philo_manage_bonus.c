@@ -10,28 +10,41 @@ static void	*full_monitor(void *void_info)
 	while (++idx < info->input->philo_num)
 		sem_wait(info->resource->full_counter);
 	idx = -1;
+	sem_wait(info->resource->sem_print);
 	while (++idx < info->input->philo_num)
-		kill(info->pid_arr[idx], SIGKILL);
+		kill(info->resource->pid_arr[idx], SIGKILL);
 	return ((void *)RET_SUCCESS);
+}
+
+static void	die_msg_and_kill(t_info *info, pid_t dead_pid)
+{
+	struct timeval	cur_time;
+	int				idx;
+
+	gettimeofday(&cur_time, NULL);
+	idx = -1;
+	while (++idx < info->input->philo_num)
+	{
+		if (info->resource->pid_arr[idx] == dead_pid)
+			prinf("%d %d%s\n", time_interval(&info->start_time, &cur_time),
+				idx + 1, MSG_DIED);
+		else
+			kill(info->resource->pid_arr[idx], SIGKILL);
+	}
 }
 
 void	philo_manage(t_info *info)
 {
 	pthread_t	full_monitor_thread;
-	pid_t		died_process;
+	pid_t		dead_pid;
 	int			idx;
 	int			status;
 
 	pthread_create(&full_monitor_thread, NULL, full_monitor, info);
 	pthread_detach(full_monitor_thread);
-	died_process = waitpid(-1, &status, 0);
+	dead_pid = waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
-	{
-		idx = -1;
-		while (++idx < info->input->philo_num)
-			if (info->pid_arr[idx] != died_process)
-				kill(info->pid_arr[idx], SIGKILL);
-	}
+		die_msg_and_kill(info, dead_pid);
 	idx = 0;
 	while (++idx < info->input->philo_num)
 		waitpid(-1, NULL, 0);

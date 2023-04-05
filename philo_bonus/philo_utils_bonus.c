@@ -36,6 +36,33 @@ int	philo_atoi(const char *str)
 	return (result);
 }
 
+char	*small_itoa(int num)
+{
+	char	*result;
+	int		order;
+	int		tmp;
+	int		idx;
+
+	order = 0;
+	tmp = num;
+	while (tmp)
+	{
+		++order;
+		tmp /= 10;
+	}
+	result = (char *) malloc(sizeof(char) * (order + 1));
+	if (result == NULL)
+		return (NULL);
+	idx = order - 1;
+	while (num)
+	{
+		result[idx--] = num % 10;
+		num /= 10;
+	}
+	result[order] = '\0';
+	return (result);
+}
+
 char	*strjoin_and_free(char *s1, char *s2)
 {
 	char	*joined_str;

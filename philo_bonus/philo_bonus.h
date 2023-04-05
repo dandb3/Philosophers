@@ -17,12 +17,11 @@
 # define SEM_FORKS_ACCESS "/sem_forks_access"
 # define SEM_FULL_COUNTER "/sem_full_counter"
 # define SEM_PRINT "/sem_print"
+# define SEM_LAST_EAT "/sem_last_eat_"
 # define RET_SUCCESS 0
 # define RET_FAILURE -1
 # define DEAD 1
 # define ALIVE 0
-# define USING 1
-# define AVAILABLE 0
 
 typedef int t_milisec;
 typedef enum e_mode
@@ -49,7 +48,9 @@ typedef struct s_resource
 	sem_t	*forks_access;
 	sem_t	*full_counter;
 	sem_t	*sem_print;
-	int		status;
+	sem_t	**sem_last_eat;
+	char	**sem_names;
+	pid_t	*pid_arr;
 }	t_resource;
 
 typedef struct s_info
@@ -59,7 +60,6 @@ typedef struct s_info
 	struct timeval	wait_start;
 	t_input 		*input;
 	t_resource 		*resource;
-	pid_t			*pid_arr;
 	int				eat_cnt;
 	int				pos;
 }	t_info;
@@ -80,13 +80,21 @@ void		philo_routine(t_info *info);
 size_t		ft_strlen(const char *str);
 t_milisec	time_interval(struct timeval *start_time, struct timeval *cur_time);
 int			philo_atoi(const char *str);
+char		*small_itoa(int num);
+char		*strjoin_and_free(char *s1, char *s2);
 
 /* initialize */
-int			philo_init(t_info *info, t_input *input, t_resource *resource,
-				char *argv[]);
+int			input_init(t_input *input, char *argv[]);
+int			info_init(t_info *info, t_input *input, t_resource *resource);
+int			resource_init(t_input *input, t_resource *resource);
 
 /* free */
-void		free_resource(void);
-void		free_all_data(pid_t *pid_arr);
+int			unlink_sem_names(t_input *input, t_resource *resource, int ret);
+int			unlink_semaphores(int ret);
+int			unlink_all(t_input *input, t_resource *resource, int ret);
+int			free_sem_names(t_input *input, t_resource *resource, int ret);
+int			free_resource(t_resource *resource, int ret);
+int			free_all(t_input *input, t_resource *resource, int ret);
+int			release_all(t_info *info, int ret);
 
 #endif

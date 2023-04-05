@@ -10,7 +10,10 @@ void	philo_begin(t_info *info)
 	{
 		info->pid_arr[idx] = fork();
 		if (info->pid_arr[idx] == 0)
-			break;
+		{
+			info->pos = idx + 1;
+			break ;
+		}
 	}
 	if (info->pid_arr[idx] == 0)
 		philo_routine(info);

@@ -19,24 +19,31 @@ static int	input_init(t_input *input, char *argv[])
 
 static int	resource_init(t_input *input, t_resource *resource)
 {
+	resource->status = AVAILABLE;
 	resource->forks_status = sem_open(SEM_FORKS_STATUS, O_CREAT,
 		0644, input->philo_num);
-	if (resource->forks_status == SEM_FAILED)
-		return (RET_FAILURE);
 	resource->forks_access = sem_open(SEM_FORKS_ACCESS, O_CREAT, 0644, 1);
-	if (resource->forks_access == SEM_FAILED)
-	{
-		sem_unlink(SEM_FORKS_STATUS);
-		return (RET_FAILURE);
-	}
 	resource->full_counter = sem_open(SEM_FULL_COUNTER, O_CREAT, 0644, 0);
-	if (resource->full_counter == SEM_FAILED)
+	resource->sem_print = sem_open(SEM_PRINT, O_CREAT, 0644, 1);
+	if (resource->forks_status == SEM_FAILED
+		|| resource->forks_access == SEM_FAILED
+		|| resource->full_counter == SEM_FAILED
+		|| resource->sem_print == SEM_FAILED)
 	{
 		sem_unlink(SEM_FORKS_STATUS);
 		sem_unlink(SEM_FORKS_ACCESS);
+		sem_unlink(SEM_FULL_COUNTER);
+		sem_unlink(SEM_PRINT);
 		return (RET_FAILURE);
 	}
 	return (RET_SUCCESS);
+}
+
+static void	info_init(t_info *info, t_input *input, t_resource *resource)
+{
+	info->input = input;
+	info->resource = resource;
+	info->eat_cnt = 0;
 }
 
 int	philo_init(t_info *info, t_input *input, t_resource *resource,
@@ -56,7 +63,6 @@ int	philo_init(t_info *info, t_input *input, t_resource *resource,
 		free(info->pid_arr);
 		return (RET_FAILURE);
 	}
-	info->input = input;
-	info->resource = resource;
+	info_init(info, input, resource);
 	return (RET_SUCCESS);
 }

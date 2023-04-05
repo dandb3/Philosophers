@@ -38,9 +38,7 @@ typedef enum e_mode
 	MODE_THINK,
 	MODE_SLEEP,
 	MODE_FORK,
-	MODE_DIED,
-	MODE_STARVE,
-	MODE_FULL
+	MODE_DIED
 }	t_mode;
 
 typedef struct s_input

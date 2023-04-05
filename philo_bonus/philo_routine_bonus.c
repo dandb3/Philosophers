@@ -2,6 +2,9 @@
 
 static void	philo_eat(t_info *info)
 {
+	usleep(100);
+	hold_forks(info);
+	print_msg(info, MSG_EAT, MODE_EAT);
 
 }
 

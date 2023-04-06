@@ -25,7 +25,7 @@ static void	die_msg_and_kill(t_info *info, pid_t dead_pid)
 	while (++idx < info->input->philo_num)
 	{
 		if (info->resource->pid_arr[idx] == dead_pid)
-			printf("%d %d%s\n", time_interval(&info->start_time,
+			printf("%d %d%s", time_interval(&info->start_time,
 				&info->cur_time), idx + 1, MSG_DIED);
 		else
 			kill(info->resource->pid_arr[idx], SIGKILL);

@@ -27,6 +27,7 @@ static void	philo_begin(t_info *info)
 
 	idx = -1;
 	gettimeofday(&info->start_time, NULL);
+	info->last_eat = info->start_time;
 	while (++idx < info->input->philo_num)
 	{
 		info->resource->pid_arr[idx] = fork();

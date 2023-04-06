@@ -20,8 +20,6 @@
 # define SEM_LAST_EAT "/sem_last_eat_"
 # define RET_SUCCESS 0
 # define RET_FAILURE -1
-# define DEAD 1
-# define ALIVE 0
 
 typedef int t_milisec;
 
@@ -50,23 +48,25 @@ typedef struct s_info
 	struct timeval	start_time;
 	struct timeval	last_eat;
 	struct timeval	wait_start;
+	struct timeval	cur_time;
 	t_input 		*input;
 	t_resource 		*resource;
 	int				eat_cnt;
 	int				pos;
 }	t_info;
 
-void	print_msg(t_info *info, const char *msg);
-void	hold_forks(t_info *info);
-void	busy_wait(t_info *info, t_milisec duration);
-
 /* start */
-void		philo_begin(t_info *info);
 int			philo(char *argv[]);
 
 /* procedure */
 void		philo_manage(t_info *info);
 void		philo_routine(t_info *info);
+
+/* small_procedure */
+void		print_msg(t_info *info, const char *msg);
+void		busy_wait(t_info *info, t_milisec duration);
+void		hold_forks(t_info *info);
+void		drop_forks(t_info *info);
 
 /* utilities */
 size_t		ft_strlen(const char *str);

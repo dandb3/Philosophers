@@ -54,7 +54,7 @@ static int	make_semaphores(t_input *input, t_resource *resource)
 	resource->forks_status = sem_open(SEM_FORKS_STATUS, O_CREAT,
 		0644, input->philo_num);
 	resource->forks_access = sem_open(SEM_FORKS_ACCESS, O_CREAT, 0644,
-		input->philo_num / 2);
+		input->philo_num - 1);
 	resource->full_counter = sem_open(SEM_FULL_COUNTER, O_CREAT, 0644, 0);
 	resource->sem_print = sem_open(SEM_PRINT, O_CREAT, 0644, 1);
 	if (resource->forks_status == SEM_FAILED

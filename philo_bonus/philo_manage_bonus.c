@@ -9,8 +9,8 @@ static void	*full_monitor(void *void_info)
 	idx = -1;
 	while (++idx < info->input->philo_num)
 		sem_wait(info->resource->full_counter);
-	idx = -1;
 	sem_wait(info->resource->sem_print);
+	idx = -1;
 	while (++idx < info->input->philo_num)
 		kill(info->resource->pid_arr[idx], SIGKILL);
 	return ((void *)RET_SUCCESS);
@@ -18,16 +18,15 @@ static void	*full_monitor(void *void_info)
 
 static void	die_msg_and_kill(t_info *info, pid_t dead_pid)
 {
-	struct timeval	cur_time;
 	int				idx;
 
-	gettimeofday(&cur_time, NULL);
+	gettimeofday(&info->cur_time, NULL);
 	idx = -1;
 	while (++idx < info->input->philo_num)
 	{
 		if (info->resource->pid_arr[idx] == dead_pid)
-			prinf("%d %d%s\n", time_interval(&info->start_time, &cur_time),
-				idx + 1, MSG_DIED);
+			printf("%d %d%s\n", time_interval(&info->start_time,
+				&info->cur_time), idx + 1, MSG_DIED);
 		else
 			kill(info->resource->pid_arr[idx], SIGKILL);
 	}

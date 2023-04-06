@@ -18,6 +18,7 @@ void	hold_forks(t_info *info)
 	gettimeofday(&info->cur_time, NULL);
 	print_msg(info, MSG_FORK);
 	sem_wait(info->resource->forks_status);
+	gettimeofday(&info->cur_time, NULL);
 	print_msg(info, MSG_FORK);
 	sem_post(info->resource->forks_access);
 }

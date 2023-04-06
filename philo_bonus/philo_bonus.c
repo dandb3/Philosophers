@@ -26,6 +26,7 @@ static void	philo_begin(t_info *info)
 	int	idx;
 
 	idx = -1;
+	gettimeofday(&info->start_time, NULL);
 	while (++idx < info->input->philo_num)
 	{
 		info->resource->pid_arr[idx] = fork();

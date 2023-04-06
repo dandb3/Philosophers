@@ -28,6 +28,7 @@ static void	philo_sleep(t_info *info)
 
 static void	philo_think(t_info *info)
 {
+	gettimeofday(&info->cur_time, NULL);
 	print_msg(info, MSG_THINK);
 }
 

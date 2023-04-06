@@ -39,8 +39,11 @@ void	philo_manage(t_info *info)
 	int			idx;
 	int			status;
 
-	pthread_create(&full_monitor_thread, NULL, full_monitor, info);
-	pthread_detach(full_monitor_thread);
+	if (info->input->number_of_times > 0)
+	{
+		pthread_create(&full_monitor_thread, NULL, full_monitor, info);
+		pthread_detach(full_monitor_thread);
+	}
 	dead_pid = waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
 		die_msg_and_kill(info, dead_pid);

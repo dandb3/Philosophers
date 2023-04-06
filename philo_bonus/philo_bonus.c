@@ -36,7 +36,7 @@ static void	philo_begin(t_info *info)
 			break ;
 		}
 	}
-	if (info->resource->pid_arr[idx] == 0)
+	if (idx < info->input->philo_num)
 		philo_routine(info);
 	else
 		philo_manage(info);

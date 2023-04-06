@@ -18,7 +18,7 @@ all		:	$(NAME)
 bonus	:	$(NAME)
 
 $(NAME)	:	$(OBJS)
-	$(CC) $(CFLAGS) $^ $(PTHREAD) -o $@
+	$(CC) $(CFLAGS) $^ $(LINK) -o $@
 
 %.o		:	%.c $(HEADER)
 	$(CC) $(CFLAGS) -c $<

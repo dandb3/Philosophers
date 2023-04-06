@@ -5,7 +5,9 @@ static void	philo_eat(t_info *info)
 	usleep(100);
 	hold_forks(info);
 	gettimeofday(&info->cur_time, NULL);
+	sem_wait(info->resource->sem_last_eat[info->pos - 1]);
 	info->last_eat = info->cur_time;
+	sem_post(info->resource->sem_last_eat[info->pos - 1]);
 	print_msg(info, MSG_EAT);
 	if (++(info->eat_cnt) == info->input->number_of_times)
 		sem_post(info->resource->full_counter);
@@ -60,8 +62,8 @@ void	philo_routine(t_info *info)
 	pthread_detach(death_monitor_thread);
 	while (1)
 	{
+		philo_think(info);
 		philo_eat(info);
 		philo_sleep(info);
-		philo_think(info);
 	}
 }

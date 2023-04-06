@@ -40,9 +40,9 @@ static void	*death_monitor(void *void_info)
 	{
 		usleep(300);
 		gettimeofday(&cur_time, NULL);
-		sem_wait(info->resource->sem_names[info->pos - 1]);
+		sem_wait(info->resource->sem_last_eat[info->pos - 1]);
 		survive_time = time_interval(&info->last_eat, &cur_time);
-		sem_post(info->resource->sem_names[info->pos - 1]);
+		sem_post(info->resource->sem_last_eat[info->pos - 1]);
 		if (survive_time >= info->input->time_to_die)
 		{
 			sem_wait(info->resource->sem_print);

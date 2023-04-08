@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 10:11:20 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/08 10:12:03 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/08 11:03:05 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int	make_semaphores(t_input *input, t_resource *resource)
 {
 	int	idx;
 
+	unlink_all(input, resource, RET_SUCCESS);
 	resource->forks_status = sem_open(SEM_FORKS_STATUS, O_CREAT,
 			0644, input->philo_num);
 	resource->forks_access = sem_open(SEM_FORKS_ACCESS, O_CREAT, 0644,

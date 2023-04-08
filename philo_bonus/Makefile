@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/04/08 10:10:44 by jdoh              #+#    #+#              #
+#    Updated: 2023/04/08 10:10:46 by jdoh             ###   ########seoul.kr   #
+#                                                                              #
+# **************************************************************************** #
+
 NAME		=	philo_bonus
 SRCS		=	main_bonus.c philo_bonus.c philo_error_bonus.c \
 				philo_free1_bonus.c philo_free2_bonus.c \

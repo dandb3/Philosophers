@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 14:03:48 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/02 14:03:10 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/08 10:13:38 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_resource
 {
 	struct timeval	start_time;
 	pthread_mutex_t	mutex_simul;
-	pthread_mutex_t mutex_full;
+	pthread_mutex_t	mutex_full;
 	pthread_mutex_t	*mutex_forks;
 	t_status		*forks_status;
 	int				simul_status;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_init_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/08 10:11:20 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/08 10:12:03 by jdoh             ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 int	input_init(t_input *input, char *argv[])
@@ -52,9 +64,9 @@ static int	make_semaphores(t_input *input, t_resource *resource)
 	int	idx;
 
 	resource->forks_status = sem_open(SEM_FORKS_STATUS, O_CREAT,
-		0644, input->philo_num);
+			0644, input->philo_num);
 	resource->forks_access = sem_open(SEM_FORKS_ACCESS, O_CREAT, 0644,
-		input->philo_num - 1);
+			input->philo_num - 1);
 	resource->full_counter = sem_open(SEM_FULL_COUNTER, O_CREAT, 0644, 0);
 	resource->sem_print = sem_open(SEM_PRINT, O_CREAT, 0644, 1);
 	if (resource->forks_status == SEM_FAILED

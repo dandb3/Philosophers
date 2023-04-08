@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/08 10:10:54 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/08 10:13:20 by jdoh             ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
@@ -21,7 +33,7 @@
 # define RET_SUCCESS 0
 # define RET_FAILURE -1
 
-typedef int t_milisec;
+typedef int	t_milisec;
 
 typedef struct s_input
 {
@@ -49,8 +61,8 @@ typedef struct s_info
 	struct timeval	last_eat;
 	struct timeval	wait_start;
 	struct timeval	cur_time;
-	t_input 		*input;
-	t_resource 		*resource;
+	t_input			*input;
+	t_resource		*resource;
 	int				eat_cnt;
 	int				pos;
 }	t_info;

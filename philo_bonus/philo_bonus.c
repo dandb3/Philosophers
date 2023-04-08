@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/08 10:10:50 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/08 10:12:53 by jdoh             ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 static int	philo_init(t_info *info, t_input *input, t_resource *resource,
@@ -46,7 +58,7 @@ static void	philo_begin(t_info *info)
 int	philo(char *argv[])
 {
 	t_info		info;
-	t_input 	input;
+	t_input		input;
 	t_resource	resource;
 
 	if (philo_init(&info, &input, &resource, argv) == RET_FAILURE)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_manage_bonus.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/08 10:11:24 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/08 10:11:29 by jdoh             ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 static void	*full_monitor(void *void_info)
@@ -26,7 +38,7 @@ static void	die_msg_and_kill(t_info *info, pid_t dead_pid)
 	{
 		if (info->resource->pid_arr[idx] == dead_pid)
 			printf("%d %d%s", time_interval(&info->start_time,
-				&info->cur_time), idx + 1, MSG_DIED);
+					&info->cur_time), idx + 1, MSG_DIED);
 		else
 			kill(info->resource->pid_arr[idx], SIGKILL);
 	}

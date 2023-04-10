@@ -27,16 +27,16 @@ void	hold_forks(t_info *info)
 {
 	sem_wait(info->resource->forks_access);
 	sem_wait(info->resource->forks_status);
-	gettimeofday(&info->cur_time, NULL);
 	print_msg(info, MSG_FORK);
 	sem_wait(info->resource->forks_status);
-	gettimeofday(&info->cur_time, NULL);
 	print_msg(info, MSG_FORK);
-	sem_post(info->resource->forks_access);
 }
 
 void	drop_forks(t_info *info)
 {
 	sem_post(info->resource->forks_status);
 	sem_post(info->resource->forks_status);
+	if (info->input->philo_num & 1)
+		usleep(10);
+	sem_post(info->resource->forks_access);
 }

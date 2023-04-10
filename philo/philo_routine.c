@@ -17,6 +17,7 @@ static void	drop_forks(t_philo *philo_data)
 	pthread_mutex_lock(philo_data->forks.first);
 	*philo_data->forks.first_status = PUT_DOWN;
 	pthread_mutex_unlock(philo_data->forks.first);
+	usleep(50);
 	pthread_mutex_lock(philo_data->forks.second);
 	*philo_data->forks.second_status = PUT_DOWN;
 	pthread_mutex_unlock(philo_data->forks.second);
@@ -24,7 +25,6 @@ static void	drop_forks(t_philo *philo_data)
 
 static int	philo_eat(t_philo *philo_data)
 {
-	usleep(100);
 	if (hold_forks(philo_data) == RET_FAILURE)
 		return (RET_FAILURE);
 	if (print_msg(philo_data, MSG_EAT, MODE_EAT) == RET_FAILURE)

@@ -74,6 +74,7 @@ typedef struct s_philo
 	t_forks			forks;
 	struct timeval	last_eat;
 	struct timeval	wait_start;
+	struct timeval	cur_time;
 	pthread_t		self;
 	t_resource		*resource;
 	t_input			*input;

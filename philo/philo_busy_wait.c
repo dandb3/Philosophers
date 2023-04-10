@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	end_check(t_philo *philo_data, struct timeval *cur_time)
+static int	end_check(t_philo *philo_data)
 {
 	pthread_mutex_lock(&philo_data->resource->mutex_simul);
 	if (philo_data->resource->simul_status == DEAD_OR_FULL)
@@ -21,7 +21,7 @@ static int	end_check(t_philo *philo_data, struct timeval *cur_time)
 		return (RET_FAILURE);
 	}
 	pthread_mutex_unlock(&philo_data->resource->mutex_simul);
-	if (time_interval(&philo_data->last_eat, cur_time)
+	if (time_interval(&philo_data->last_eat, &philo_data->cur_time)
 		>= philo_data->input->time_to_die)
 	{
 		print_msg(philo_data, MSG_DIED, MODE_DIED);
@@ -32,35 +32,37 @@ static int	end_check(t_philo *philo_data, struct timeval *cur_time)
 
 int	busy_wait(t_philo *philo_data, t_milisec duration)
 {
-	struct timeval	cur_time;
-
 	gettimeofday(&philo_data->wait_start, NULL);
 	while (1)
 	{
 		usleep(300);
-		gettimeofday(&cur_time, NULL);
-		if (end_check(philo_data, &cur_time) == RET_FAILURE)
+		gettimeofday(&philo_data->cur_time, NULL);
+		if (end_check(philo_data) == RET_FAILURE)
 			return (RET_FAILURE);
-		if (time_interval(&philo_data->wait_start, &cur_time) >= duration)
+		if (time_interval(&philo_data->wait_start, &philo_data->cur_time) \
+			>= duration)
 			return (RET_SUCCESS);
 	}
 }
 
-static int	check_fork(t_philo *philo_data, pthread_mutex_t *mutex_fork,
+static int	check_fork(t_philo *philo_data, pthread_mutex_t *mutex_fork, \
 	t_status *fork_status)
 {
-	struct timeval	cur_time;
+	unsigned int	wait_interval;
 
+	wait_interval = 300;
 	while (1)
 	{
-		gettimeofday(&cur_time, NULL);
-		if (end_check(philo_data, &cur_time) == RET_FAILURE)
+		gettimeofday(&philo_data->cur_time, NULL);
+		if (end_check(philo_data) == RET_FAILURE)
 			return (RET_FAILURE);
 		pthread_mutex_lock(mutex_fork);
 		if (*fork_status == PICK_UP)
 		{
 			pthread_mutex_unlock(mutex_fork);
-			usleep(300);
+			usleep(wait_interval);
+			if (wait_interval > 50)
+				wait_interval -= 5;
 			continue ;
 		}
 		*fork_status = PICK_UP;

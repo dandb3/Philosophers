@@ -36,11 +36,6 @@ static int	full_check(t_philo *philo_data)
 
 int	print_msg(t_philo *philo_data, const char *msg, t_mode mode)
 {
-	struct timeval	cur_time;
-	t_milisec		timestamp;
-
-	gettimeofday(&cur_time, NULL);
-	timestamp = time_interval(&philo_data->resource->start_time, &cur_time);
 	pthread_mutex_lock(&philo_data->resource->mutex_simul);
 	if (philo_data->resource->simul_status == DEAD_OR_FULL)
 	{
@@ -49,11 +44,13 @@ int	print_msg(t_philo *philo_data, const char *msg, t_mode mode)
 	}
 	if (mode == MODE_DIED)
 		philo_data->resource->simul_status = DEAD_OR_FULL;
-	printf("%d %d%s", timestamp, philo_data->pos, msg);
+	gettimeofday(&philo_data->cur_time, NULL);
+	printf("%d %d%s", time_interval(&philo_data->resource->start_time,
+		&philo_data->cur_time), philo_data->pos, msg);
 	pthread_mutex_unlock(&philo_data->resource->mutex_simul);
 	if (mode == MODE_EAT)
 	{
-		philo_data->last_eat = cur_time;
+		philo_data->last_eat = philo_data->cur_time;
 		if (full_check(philo_data) == RET_FAILURE)
 			return (RET_FAILURE);
 	}

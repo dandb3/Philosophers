@@ -12,6 +12,7 @@
 
 #include "philo.h"
 
+/* interval between forks must be bigger than interval between fork check */
 static void	drop_forks(t_philo *philo_data)
 {
 	pthread_mutex_lock(philo_data->forks.first);

@@ -61,8 +61,8 @@ static int	check_fork(t_philo *philo_data, pthread_mutex_t *mutex_fork, \
 		{
 			pthread_mutex_unlock(mutex_fork);
 			usleep(wait_interval);
-			if (wait_interval > 50)
-				wait_interval -= 5;
+			if (wait_interval > 30)
+				wait_interval -= 10;
 			continue ;
 		}
 		*fork_status = PICK_UP;

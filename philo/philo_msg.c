@@ -6,7 +6,7 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 14:03:27 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 20:32:18 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/11 12:28:10 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	print_msg(t_philo *philo_data, const char *msg, t_mode mode)
 		philo_data->resource->simul_status = DEAD_OR_FULL;
 	gettimeofday(&philo_data->cur_time, NULL);
 	printf("%d %d%s", time_interval(&philo_data->resource->start_time,
-		&philo_data->cur_time), philo_data->pos, msg);
+			&philo_data->cur_time), philo_data->pos, msg);
 	pthread_mutex_unlock(&philo_data->resource->mutex_simul);
 	if (mode == MODE_EAT)
 	{

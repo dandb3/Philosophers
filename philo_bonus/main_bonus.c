@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_msg.h                                        :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 14:03:31 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 15:15:35 by jdoh             ###   ########seoul.kr  */
+/*   Created: 2023/04/08 10:10:36 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/08 10:10:47 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_MSG_H
-# define PHILO_MSG_H
+#include "philo_bonus.h"
 
-# define MSG_FORK " has taken a fork\n"
-# define MSG_EAT " is eating\n"
-# define MSG_SLEEP " is sleeping\n"
-# define MSG_THINK " is thinking\n"
-# define MSG_DIED " died\n"
-
-#endif
+int	main(int argc, char *argv[])
+{
+	if (argc != 5 && argc != 6)
+	{
+		error_msg(ERR_INPUT);
+		return (EXIT_FAILURE);
+	}
+	if (philo(argv) == RET_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}

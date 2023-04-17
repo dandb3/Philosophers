@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_msg.h                                        :+:      :+:    :+:   */
+/*   philo_msg_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 14:03:31 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 15:15:35 by jdoh             ###   ########seoul.kr  */
+/*   Created: 2023/04/08 10:11:32 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/08 10:11:32 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_MSG_H
-# define PHILO_MSG_H
+#include "philo_bonus.h"
 
-# define MSG_FORK " has taken a fork\n"
-# define MSG_EAT " is eating\n"
-# define MSG_SLEEP " is sleeping\n"
-# define MSG_THINK " is thinking\n"
-# define MSG_DIED " died\n"
-
-#endif
+void	print_msg(t_info *info, const char *msg)
+{
+	sem_wait(info->resource->sem_print);
+	gettimeofday(&info->cur_time, NULL);
+	printf("%d %d%s", time_interval(&info->start_time, &info->cur_time), \
+		info->pos, msg);
+	sem_post(info->resource->sem_print);
+}

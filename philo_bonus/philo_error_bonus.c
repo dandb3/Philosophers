@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_pseudo_spinlock.c                            :+:      :+:    :+:   */
+/*   philo_error_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/02 13:33:51 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/02 14:09:54 by jdoh             ###   ########seoul.kr  */
+/*   Created: 2023/04/08 10:10:59 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/08 10:10:59 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-void	pseudo_spinlock(struct timeval *after_wait, t_milisec duration)
+void	error_msg(const char *msg)
 {
-	struct timeval	cur_time;
-
-	while (1)
-	{
-		usleep(300);
-		gettimeofday(&cur_time, NULL);
-		if (time_interval(after_wait, &cur_time) >= duration)
-			return ;
-	}
+	write(STDERR_FILENO, msg, ft_strlen(msg));
 }

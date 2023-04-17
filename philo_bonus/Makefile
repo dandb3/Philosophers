@@ -5,39 +5,44 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/02 13:33:27 by jdoh              #+#    #+#              #
-#    Updated: 2023/04/02 13:33:42 by jdoh             ###   ########seoul.kr   #
+#    Created: 2023/04/08 10:10:44 by jdoh              #+#    #+#              #
+#    Updated: 2023/04/08 10:10:46 by jdoh             ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	philo
-SRCS		=	philo_begin.c philo_error.c philo_free.c philo_init.c \
-				philo_msg.c philo_routine.c philo_utils.c philo.c main.c \
-				philo_busy_wait.c
+NAME		=	philo_bonus
+SRCS		=	main_bonus.c philo_bonus.c philo_error_bonus.c \
+				philo_free1_bonus.c philo_free2_bonus.c \
+				philo_init_bonus.c philo_manage_bonus.c \
+				philo_msg_bonus.c philo_routine_bonus.c \
+				philo_utils_bonus.c philo_wait_bonus.c
 OBJS		=	$(SRCS:.c=.o)
-HEADERS		=	philo_error.h philo_msg.h philo.h
-PTHREAD		=	-pthread
+HEADER		=	philo_bonus.h philo_error_bonus.h philo_msg_bonus.h
+LINK		=	-pthread
+
 CC			=	cc
 CFLAGS		=	-Werror -Wextra -Wall
+
 RM			=	rm
-RMFLAGS		=	-rf
+RFLAGS		=	-rf
 
-all			:	$(NAME)
+all		:	$(NAME)
+bonus	:	$(NAME)
 
-$(NAME)		:	$(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(PTHREAD) -o $@
+$(NAME)	:	$(OBJS)
+	$(CC) $(CFLAGS) $^ $(LINK) -o $@
 
-%.o			:	%.c $(HEADERS)
+%.o		:	%.c $(HEADER)
 	$(CC) $(CFLAGS) -c $<
 
-clean		:
-	$(RM) $(RMFLAGS) $(OBJS)
+clean	:
+	$(RM) $(RFLAGS) $(OBJS)
 
-fclean		:	clean
-	$(RM) $(RMFLAGS) $(NAME)
+fclean	:	clean
+	$(RM) $(RFLAGS) $(NAME)
 
-re			:
+re		:
 	make fclean
 	make all
 
-.PHONY		:	all clean fclean re
+.PHONY	:	all bonus re clean fclean

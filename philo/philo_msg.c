@@ -6,50 +6,53 @@
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 14:03:27 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 20:32:18 by jdoh             ###   ########seoul.kr  */
+/*   Updated: 2023/04/11 12:28:10 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	print_msg(t_philo *philo_data, const char *msg)
+static int	full_check(t_philo *philo_data)
 {
-	struct timeval	cur_time;
-	t_milisec		timestamp;
+	int	full_flag;
 
-	gettimeofday(&cur_time, NULL);
-	timestamp = time_interval(philo_data->survive_start, &cur_time);
-	pthread_mutex_lock(philo_data->mutex_die_checker);
-	if (*philo_data->die_cnt == DEAD_OR_FULL)
+	full_flag = 0;
+	if (++(philo_data->eat_cnt) == philo_data->input->number_of_times)
 	{
-		pthread_mutex_unlock(philo_data->mutex_die_checker);
-		return (RET_FAILURE);
+		pthread_mutex_lock(&philo_data->resource->mutex_full);
+		if (++(philo_data->resource->full_cnt) == philo_data->input->philo_num)
+			full_flag = 1;
+		pthread_mutex_unlock(&philo_data->resource->mutex_full);
+		if (full_flag)
+		{
+			pthread_mutex_lock(&philo_data->resource->mutex_simul);
+			philo_data->resource->simul_status = DEAD_OR_FULL;
+			pthread_mutex_unlock(&philo_data->resource->mutex_simul);
+			return (RET_FAILURE);
+		}
 	}
-	printf("%d %d%s", timestamp, philo_data->pos, msg);
-	pthread_mutex_unlock(philo_data->mutex_die_checker);
 	return (RET_SUCCESS);
 }
 
-int	print_msg_eat(t_philo *philo_data, const char *msg)
+int	print_msg(t_philo *philo_data, const char *msg, t_mode mode)
 {
-	t_milisec		timestamp;
-	int				philo_full;
-
-	philo_full = 0;
-	gettimeofday(&philo_data->starve_start, NULL);
-	timestamp
-		= time_interval(philo_data->survive_start, &philo_data->starve_start);
-	if (++(philo_data->eat_cnt) == philo_data->input->number_of_times)
-		philo_full = 1;
-	pthread_mutex_lock(philo_data->mutex_die_checker);
-	if (*philo_data->die_cnt == DEAD_OR_FULL)
+	pthread_mutex_lock(&philo_data->resource->mutex_simul);
+	if (philo_data->resource->simul_status == DEAD_OR_FULL)
 	{
-		pthread_mutex_unlock(philo_data->mutex_die_checker);
+		pthread_mutex_unlock(&philo_data->resource->mutex_simul);
 		return (RET_FAILURE);
 	}
-	printf("%d %d%s", timestamp, philo_data->pos, msg);
-	if (philo_full && ++(*philo_data->die_cnt) == philo_data->input->philo_num)
-		*philo_data->die_cnt = DEAD_OR_FULL;
-	pthread_mutex_unlock(philo_data->mutex_die_checker);
+	if (mode == MODE_DIED)
+		philo_data->resource->simul_status = DEAD_OR_FULL;
+	gettimeofday(&philo_data->cur_time, NULL);
+	printf("%d %d%s", time_interval(&philo_data->resource->start_time,
+			&philo_data->cur_time), philo_data->pos, msg);
+	pthread_mutex_unlock(&philo_data->resource->mutex_simul);
+	if (mode == MODE_EAT)
+	{
+		philo_data->last_eat = philo_data->cur_time;
+		if (full_check(philo_data) == RET_FAILURE)
+			return (RET_FAILURE);
+	}
 	return (RET_SUCCESS);
 }

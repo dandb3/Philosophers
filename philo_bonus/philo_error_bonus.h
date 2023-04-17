@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_msg.h                                        :+:      :+:    :+:   */
+/*   philo_error_bonus.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdoh <jdoh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 14:03:31 by jdoh              #+#    #+#             */
-/*   Updated: 2023/04/01 15:15:35 by jdoh             ###   ########seoul.kr  */
+/*   Created: 2023/04/08 10:11:02 by jdoh              #+#    #+#             */
+/*   Updated: 2023/04/08 10:11:11 by jdoh             ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_MSG_H
-# define PHILO_MSG_H
+#ifndef PHILO_ERROR_BONUS_H
+# define PHILO_ERROR_BONUS_H
 
-# define MSG_FORK " has taken a fork\n"
-# define MSG_EAT " is eating\n"
-# define MSG_SLEEP " is sleeping\n"
-# define MSG_THINK " is thinking\n"
-# define MSG_DIED " died\n"
+# define ERR_INPUT "Invalid input: [number_of_philosophers] \
+[time_to_die] [time_to_eat] [time_to_sleep] \
+(number_of_times_each_philosopher_must_eat)\n"
+# define ERR_INIT "Initialization Failed\n"
+
+void	error_msg(const char *msg);
 
 #endif
